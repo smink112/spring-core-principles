@@ -1,6 +1,7 @@
 package hello.core;
 
-import hello.core.discount.FixDiscountPolicy;
+import hello.core.discount.DiscountPolicy;
+import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.MemberService;
 import hello.core.member.MemberServiceImpl;
 import hello.core.member.MemoryMemberRepository;
@@ -24,7 +25,10 @@ public class AppConfig {
         return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
 
-    private static FixDiscountPolicy discountPolicy() {
-        return new FixDiscountPolicy();
+    // 이제 할인 정책 변경을 위해 AppConfig만 변경하면 된다.
+    // 클라이언트 코드인 OrderServiceImpl을 포함하여 어떠한 사용영역의 코드를 손댈 필요가 없다.
+    private static DiscountPolicy discountPolicy() {
+//        return new FixDiscountPolicy();
+        return new RateDiscountPolicy();
     }
 }
